@@ -1,0 +1,31 @@
+Projekt jsem odevzdal v termínu (21. 1. myslím, deadline byl 23. 1.).
+Ale dnes 25. 1. 2024 jsem přišel na chybu -> při VYTVOŘENÍ POJIŠTĚNÍ to nevalidovali správně, zda je v poli "částka" zadaná nula -> když jsem zadal nulu, tak to místo chybové hlášky a zůstání na vytvoření shodilo aplikaci.
+SNAD JSEM SE NEDOPUSTIL NĚJAKÉHO PORUŠENÍ PRAVIDEL. Šlo opravdu o úpravu malé věci. 
+VYŘEŠENO: v argumentu post mapping metody pro uložení pojištění byl BindingResult result objekt na špatné pozici (má být za @Valid) + v případě erroru to přesměrovávalo na špatný link (byl tam překlep).
+
+
+1. Funguje to tak dobře?
+Uživatel se přihlásí -> kontroler mu přes get metodu vyhodí seznam pojištěnců -> bude chtít přidat pojištění -> kontroler mu přes get metodu vyhodí formulář pro přidání pojištění -> člověk to zadá, údaje se uloží v DTO přepravce a zde se taky údaje validují -> přes post mapping se to odešle do back-endu -> zde to zpracuje servisní třída
+
+2. Databázové schéma?
+ One to many a Many to one vazby, je to v pohodě? Může být v pojištěnjí přímo ID pojištěnce, i když se pojištění váže na pojištění? Naopak to nemá smysl, proto je v entitě Pojištěnce seznam pojištění
+
+3. Předávání ID přes hidden v šabloně - je to ok? 
+
+4. Je to responzivní?
+
+5. Čeština vs Angličtina: 
+Nevěděl jsem, jak udělat login/register/session logiku, tak jsem si vypomohl s internetem a jen nějaké věci upravil, je to ok? Teď to chápu, nicméně měl bych to předělat do češtiny, když ostatní entity, třídy, metody a URLs jsou v češtině?
+IMO radši bych všechno dělal v angličtině a kdyžtak přes @Param bych případným outsourced třeba Indům řekl, že v tabulce je pojisteni_id "insurance_id"
+
+6. Můžu to takto předat k životopisu? 
+Nehodí mi to na hlavu? Mám tam přidávat ještě ty drobnosti, jako je třeba paginace, upravit to vzezření, atd., nebo ready to ship?
+
+
+Co doplnit: 
+- paginace
+- lepší tlačítka
+- popřípadě další funkce, ale radši bych se věnoval dalším projektům
+- mapper třídy (lepší čitelnost kódu)
+- odstranit / u editu
+- nepředávat jednotlivé atributy třeba přes hidden field pojistenci_id, ale celý objekt a z něj si pak vytáhnout, co potřebuji

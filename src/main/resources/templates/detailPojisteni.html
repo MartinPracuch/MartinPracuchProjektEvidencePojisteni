@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail pojištění</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Detail pojištění</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <!-- navigace -->
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/users}">Uživatelé</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/logout}">Odhlášení</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/pojistenci}">Pojištěnci</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/pojisteni}">Pojištění</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1 class="text-center">Detaily pojištění</h1>
+
+            <div class="col-md-10">
+                <!-- detaily pojištění -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Detaily pojištění</h5>
+                        <p class="card-text">
+                            Částka: <span th:text="${pojisteni.castka}"></span><br>
+                            Datum založení: <span th:text="${#temporals.format(pojisteni.platnost_od, 'dd. MM. yyyy')}"></span><br>
+                            Datum ukončení: <span th:text="${#temporals.format(pojisteni.platnost_do, 'dd. MM. yyyy')}"></span><br>
+
+                            <!-- pojištění má v sobě pojištěnce, z toho se vezme pojistenci_id-->
+                            Pojištěnec: <a th:href="@{/pojistenci/{pojistenci_id}(pojistenci_id=${pojisteni.pojistenec.pojistenci_id})}">
+                            <span th:text="${pojisteni.pojistenec.jmeno + ' ' + pojisteni.pojistenec.prijmeni}"></span></a><br>
+
+                            Typ pojištění: <span th:text="${pojisteni.typPojisteni}"></span><br>
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mt-4">
+        <div class="col-md-12 text-center">
+
+            <a class="btn btn-success" th:href="@{/upravitPojisteni/{pojisteni_id}(pojisteni_id=${pojisteni.pojisteni_id})}">
+                Editovat pojištění
+            </a>
+
+            <!-- smazání, do back-endu předává pojisteni_id a pojistenci_id přes skryté pole -->
+            <form method="post" th:action="@{/smazatPojisteni/{pojisteni_id}(pojisteni_id=${pojisteni.pojisteni_id})}" onsubmit="return confirm('Jste si jisti, že chcete smazat toto pojištění?');">
+                <input type="hidden" name="pojistenci_id" th:value="${pojisteni.pojistenec.pojistenci_id}" />
+                <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="btn-warning" class="btn btn-warning">Smazat</button>
+            </form>
+
+        </div>
+    </div>
+
+
+    </table>
+
+</div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

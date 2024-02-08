@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Přidat pojištění</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Přidat pojištění</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <!-- navigace -->
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/users}">Uživatelé</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/logout}">Odhlášení</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/pojistenci}">Pojištěnci</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/pojisteni}">Pojištění</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<!-- formulář pro přidání pojištění -->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1 class="text-center">Přidat pojištění</h1>
+
+            <div class="form-group mb-3">
+                <form method="post" role="form" th:action="@{'/pridatPojisteni/ulozit/' + ${pojistenci_id}}" th:object="${pojisteniDto}">
+
+                    <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                    <!-- inputy a zpracování errorů, validace na straně serveru-->
+                    <div class="mb-3">
+                        <label for="castka" class="form-label">Částka</label>
+                        <input type="text" class="form-control is-invalid" id="castka" th:field="*{castka}" required>
+                        <div id="validationServerCastkaFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('castka')}" th:errors="*{castka}"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="platnost_od" class="form-label">Platnost od</label>
+                        <input type="date" class="form-control is-invalid" id="platnost_od" th:field="*{platnost_od}" required>
+                        <div id="validationServerPlatnostOdFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('platnost_od')}" th:errors="*{platnost_od}"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="platnost_do" class="form-label">Platnost do</label>
+                        <input type="date" class="form-control is-invalid" id="platnost_do" th:field="*{platnost_do}" required>
+                        <div id="validationServerPlatnostDoFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('platnost_do')}" th:errors="*{platnost_do}"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="typPojisteni" class="form-label">Typ pojištění</label>
+                        <select class="form-select is-invalid" id="typPojisteni" name="typPojisteni" th:field="*{typPojisteni}" required>
+                            <option th:each="typ : ${T(org.example.enums.TypPojisteni).values()}" th:value="${typ}" th:text="${typ}"></option>
+                        </select>
+                        <div id="validationServerTypPojisteniFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('typPojisteni')}" th:errors="*{typPojisteni}"></div>
+                    </div>
+
+                    <!-- tohle pole předává pojistenci_id, aby program věděl, k jakému pojištěnci je přidáno pojištění -->
+                    <input type="hidden" th:field="*{pojistenci_id}" />
+
+
+                    <button type="submit" class="btn btn-primary">Přidat pojištění</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

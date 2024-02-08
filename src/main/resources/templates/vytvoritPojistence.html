@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>SEZNAM POJIŠTĚNCŮ</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Vytvořit pojištěnce</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- navigace -->
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" th:href="@{/users}">Uživatelé</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" th:href="@{/logout}">Odhlášení</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" th:href="@{/pojistenci}">Pojištěnci</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" th:href="@{/pojisteni}">Pojištění</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h1 class="text-center">Přidat pojištěnce</h1>
+
+      <div class="form-group mb-3">
+        <form method="post" role="form" th:action="@{'/vytvorit-pojistence/ulozit'}" th:object="${pojistenecDto}">
+
+          <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+          <!-- inputy a zpracování errorů, validace na straně serveru-->
+          <div class="mb-3">
+            <label for="jmeno" class="form-label">Jméno</label>
+            <input type="text" class="form-control is-invalid" id="jmeno" th:field="*{jmeno}" required>
+            <div id="validationServerJmenoFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('jmeno')}" th:errors="*{jmeno}"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="prijmeni" class="form-label">Příjmení</label>
+            <input type="text" class="form-control is-invalid" id="prijmeni" th:field="*{prijmeni}" required>
+            <div id="validationServerPrijmeniFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('prijmeni')}" th:errors="*{prijmeni}"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="text" class="form-control is-invalid" id="email" th:field="*{email}" required>
+            <div id="validationServerEmailFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="pohlavi" class="form-label">Pohlaví</label>
+            <select class="form-select is-invalid" id="pohlavi" name="pohlavi" th:field="*{pohlavi}" required>
+              <option th:each="sex : ${T(org.example.enums.Pohlavi).values()}" th:value="${sex}" th:text="${sex}"></option>
+            </select>
+            <div id="validationServerPohlaviFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('pohlavi')}" th:errors="*{pohlavi}"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="ulice" class="form-label">Ulice</label>
+            <input type="text" class="form-control is-invalid" id="ulice" th:field="*{ulice}" required>
+            <div id="validationServerUliceFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('ulice')}" th:errors="*{ulice}"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="mesto" class="form-label">Město</label>
+            <input type="text" class="form-control is-invalid" id="mesto" th:field="*{mesto}" required>
+            <div id="validationServerMestoFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('mesto')}" th:errors="*{mesto}"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="cislopopisne" class="form-label">Číslo popisné</label>
+            <input type="text" class="form-control is-invalid" id="cislopopisne" th:field="*{cislopopisne}" required>
+            <div id="validationServerCislopopisneFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('cislopopisne')}" th:errors="*{cislopopisne}"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="psc" class="form-label">PSČ</label>
+            <input type="text" class="form-control is-invalid" id="psc" th:field="*{psc}" required>
+            <div id="validationServerPscFeedback" class="invalid-feedback" th:if="${#fields.hasErrors('psc')}" th:errors="*{psc}"></div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Přidat pojištěnce</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
