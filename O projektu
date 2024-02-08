@@ -1,0 +1,26 @@
+Jak se registrovat:
+- Lze vytvořit nové údaje, stačí se registrovat. Heslo může být klidně 1234.
+- Můžete použít: martin.pracuch@gmail.com a heslo 1234
+- V repozitáři je databáze, prosím importovat a přepsat v properties na správnou cestu a správný port, jak to Vám vyhovuje
+
+Funkce aplikace:
+- eviduje pojištění a pojištěnce
+- 1 pojištěnec má na sebe navázaných více pojištění (one to many), 1 pojištění je vždy na 1 pojištěnce (many to one)
+- s entitami se pracuje s JPA a každá entita má v MySQL svou tabulku
+- aplikace zvládne CRUD funkce ->
+  - CREATE: - vytvořit pojištěnce, pojištění, uživatele
+  - UPDATE: - upravit pojištěnce, pojištění
+  - READ: - zobrazí seznam všech pojištění v databázi, a také seznam všech pojištěnců, stejně tak pokaždé, co se zobrazí pojištění, tak je u něj i korespondující pojištěnec a naopak, v detailu každého pojištěnce je také seznam jeho pojištění
+          - přes detail pojištěnce lze přistoupit k detailu pojištění, přes detail pojištění lze přistoupit k detailu pojištěnce
+  - DELETE: smazání pojištěnce (to smaže i korespondující pojištění) a smazání pojištění (to nechá pojištěnce ve stejném stavu, až na to, že pojištění je smazáno samozřejmě)
+- kontrola vstupů na serverové straně: například e-mail musí být zadaný v e-mail formátu, PSČ a číslo popisné atd. musí být zadány ve správném formátu
+
+
+CO DOPLNIT: (v současné době není priorita, pracuji na jiných projektech, tohle byl hlavně projekt k závěrečné zkoušce kurzu)
+- paginaci pojištění i pojištěnců
+- další entitu, pojistnou událost
+- upravit front-end, hezčí vzezření, v současné době je to hrozně basic
+- přidat mapperovou vrstvu: mappování DTO by mělo probíhat v mapper třídách, ne v servisních třídách
+- vyhledávaní podle různých parametrů, třeba PSČ, města, e-mailu atd.
+
+
